@@ -10,4 +10,5 @@ export default interface Reimbursement{
     amount: number
     reason: string
     isApproved: IsApproved
+    mgrComment?: string
 }
