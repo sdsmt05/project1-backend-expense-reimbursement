@@ -11,7 +11,7 @@ describe("Reimbursement DAO Tests", ()=>{
     })
 
     it("Should create a new reimbursement", async ()=>{
-        const testReimbursement: Reimbursement = {id: "", owner: "test", amount: 300, reason: "Test reason", isApproved: IsApproved.no};
+        const testReimbursement: Reimbursement = {id: "", ownerId: "test", ownerName: "Fake Name", amount: 300, reason: "Test reason", isApproved: IsApproved.no};
         const reimbursement: Reimbursement = await reimbursementDao.createNewReimbursement(testReimbursement);
         expect(reimbursement.id).toBeTruthy()
     })

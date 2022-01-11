@@ -37,7 +37,7 @@ app.patch("/login", async (req, res) =>{
         const body: {username: string, password: string} = req.body;
         const user: Employee = await loginService.loginWithUsernameAndPassword(body.username, body.password);
         res.send(user);
-    } catch (error: any) {
+    } catch (error) {
         errorHandler(error, req, res);
     }
 })

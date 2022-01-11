@@ -6,7 +6,8 @@ export enum IsApproved {
 
 export default interface Reimbursement{
     id: string
-    owner: string
+    ownerId: string
+    ownerName: string
     amount: number
     reason: string
     isApproved: IsApproved
