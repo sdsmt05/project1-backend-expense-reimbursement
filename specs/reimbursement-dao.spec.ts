@@ -18,7 +18,7 @@ describe("Reimbursement DAO Tests", ()=>{
 
     it("Should get reimbursements for a specific user", async ()=>{
         const reimbursements: Reimbursement[] = await reimbursementDao.getReimbursementsForUser("test");
-        expect(reimbursements.length).toBe(1);
+        expect(reimbursements.length).toBeGreaterThanOrEqual(1);
     })
 
 })
