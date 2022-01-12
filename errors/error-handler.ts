@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 export default function errorHandler(error: Error, req: Request, res: Response){
-    if(error instanceof UserNotFoundError){
+    if(error instanceof ResourceNotFoundError){
         res.status(404);
         res.send(error.message);
     } else if(error instanceof InvalidPasswordError){
@@ -12,7 +12,7 @@ export default function errorHandler(error: Error, req: Request, res: Response){
     }
 }
 
-export class UserNotFoundError extends Error{
+export class ResourceNotFoundError extends Error{
 
     constructor(message: string){
         super(message);

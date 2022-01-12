@@ -25,6 +25,17 @@ app.get("/reimbursements", async (req, res) =>{
     res.send(reimbursements);
 })
 
+app.get("/reimbursements/:id", async (req, res) =>{
+    try {
+        const {id} = req.params;
+        const reimbursements: Reimbursement[] = await reimbursementService.getReimbursementsByUser(id);
+        res.status(200);
+        res.send(reimbursements);
+    } catch (error) {
+        errorHandler(error, req, res);
+    }
+})
+
 app.post("/reimbursements", async (req, res) =>{
     const reimbursement: Reimbursement = req.body;
     const savedReimbursement: Reimbursement = await reimbursementService.createReimbursement(reimbursement);

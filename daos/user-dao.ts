@@ -1,6 +1,6 @@
 import { CosmosClient} from "@azure/cosmos";
 import Employee from "../entities/employee";
-import { UserNotFoundError } from "../errors/error-handler";
+import { ResourceNotFoundError } from "../errors/error-handler";
 
 //Cosmos Db Connection Information
 const connection = new CosmosClient(process.env.AZURE_COSMOS_CONNECTION);
@@ -21,7 +21,7 @@ export class UserDaoCosmosDb implements UserDAO{
         const query = container.items.query(`SELECT u.id, u.fname, u.lname, u.username, u.password, u.isManager FROM Users u WHERE u.username = "${username}"`);
         const response = await query.fetchAll();
         if(!response.resources[0]){
-            throw new UserNotFoundError(`Could not find a user with username of ${username}`);
+            throw new ResourceNotFoundError(`Could not find a user with username of ${username}`);
         }
         return response.resources[0];
     }

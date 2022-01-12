@@ -1,6 +1,7 @@
 import { CosmosClient } from "@azure/cosmos";
 import Reimbursement from "../entities/reimbursement";
 import {v4} from 'uuid';
+import { ResourceNotFoundError } from "../errors/error-handler";
 
 //Cosmos Db Connection Information
 const connection = new CosmosClient(process.env.AZURE_COSMOS_CONNECTION);
@@ -13,6 +14,8 @@ export default interface ReimbursementDAO{
 
     getAllReimbursements(): Promise<Reimbursement[]>
 
+    getReimbursementsForUser(id: string): Promise<Reimbursement[]>
+
     createNewReimbursement(reimbursement: Reimbursement): Promise<Reimbursement>
 
 }
@@ -22,6 +25,15 @@ export class ReimbursementDaoCosmosDb implements ReimbursementDAO{
     
     async getAllReimbursements(): Promise<Reimbursement[]> {
         const response = await container.items.readAll<Reimbursement>().fetchAll();
+        return response.resources;
+    }
+
+    async getReimbursementsForUser(id: string): Promise<Reimbursement[]> {
+        const query = container.items.query(`SELECT r.id, r.ownerId, r.ownerName, r.amount, r.reason, r.isApproved, r.mgrComment FROM Reimbursements r WHERE r.ownerId = "${id}"`);
+        const response = await query.fetchAll();
+        if(!response.resources){
+            throw new ResourceNotFoundError(`Could not find reimbursements for user with id of  ${id}`);
+        }
         return response.resources;
     }
 
