@@ -9,6 +9,8 @@ export default interface ReimbursementService{
     getReimbursementsByUser(id: string): Promise<Reimbursement[]>;
 
     createReimbursement(reimbursement: Reimbursement): Promise<Reimbursement>;
+
+    updateReimbursement(reimbursement: Reimbursement): Promise<Reimbursement>;
 }
 
 export class ReimbursementServiceImpl implements ReimbursementService{
@@ -28,6 +30,9 @@ export class ReimbursementServiceImpl implements ReimbursementService{
     }
     createReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
         return this.reimbursementDao.createNewReimbursement(reimbursement);
+    }
+    updateReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
+        return this.reimbursementDao.updateReimbursement(reimbursement);
     }
 
 }

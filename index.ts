@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import ReimbursementDAO, { ReimbursementDaoCosmosDb } from './daos/reimbursement-dao';
 import ReimbursementService, { ReimbursementServiceImpl } from './services/reimbursement-service';
-import Reimbursement from './entities/reimbursement';
+import Reimbursement, { IsApproved } from './entities/reimbursement';
 import UserDAO, { UserDaoCosmosDb } from './daos/user-dao';
 import LoginService, { LoginServiceImpl } from './services/login-service';
 import Employee from './entities/employee';
@@ -51,6 +51,12 @@ app.patch("/login", async (req, res) =>{
     } catch (error) {
         errorHandler(error, req, res);
     }
+})
+
+app.patch("/reimbursements/:id", async (req, res) =>{
+    const reimbursement = req.body;
+    const updatedReimbursement: Reimbursement = await reimbursementService.updateReimbursement(reimbursement);
+    res.send(updatedReimbursement);
 })
 
 app.listen(5000, ()=>console.log("Application Started..."))

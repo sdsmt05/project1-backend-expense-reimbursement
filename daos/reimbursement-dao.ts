@@ -18,6 +18,8 @@ export default interface ReimbursementDAO{
 
     createNewReimbursement(reimbursement: Reimbursement): Promise<Reimbursement>
 
+    updateReimbursement(reimbursement: Reimbursement): Promise<Reimbursement>
+
 }
 
 //ReimbursementDao Implementation
@@ -40,6 +42,11 @@ export class ReimbursementDaoCosmosDb implements ReimbursementDAO{
     async createNewReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
         reimbursement.id = v4();
         const response = await container.items.create(reimbursement);
+        return response.resource;
+    }
+
+    async updateReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
+        const response = await container.items.upsert<Reimbursement>(reimbursement);
         return response.resource;
     }
 }
