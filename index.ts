@@ -53,9 +53,10 @@ app.patch("/login", async (req, res) =>{
     }
 })
 
-app.patch("/reimbursements/:id", async (req, res) =>{
+app.put("/reimbursements/:id", async (req, res) =>{
     const reimbursement = req.body;
     const updatedReimbursement: Reimbursement = await reimbursementService.updateReimbursement(reimbursement);
+    res.status(201);
     res.send(updatedReimbursement);
 })
 
