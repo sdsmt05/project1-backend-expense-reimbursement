@@ -5,6 +5,7 @@ export default function errorHandler(error: Error, req: Request, res: Response){
         res.status(404);
         res.send(error.message);
     } else if(error instanceof InvalidPasswordError){
+        res.status(401)
         res.send(error.message);
     } else {
         res.status(500);
