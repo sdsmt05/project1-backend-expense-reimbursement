@@ -7,6 +7,7 @@ import UserDAO, { UserDaoCosmosDb } from './daos/user-dao';
 import LoginService, { LoginServiceImpl } from './services/login-service';
 import Employee from './entities/employee';
 import errorHandler from './errors/error-handler';
+import { logger } from './logger/logger';
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.get("/reimbursements/:id", async (req, res) =>{
         res.send(reimbursements);
     } catch (error) {
         errorHandler(error, req, res);
+        logger.error(error.message);
     }
 })
 
@@ -50,6 +52,7 @@ app.patch("/login", async (req, res) =>{
         res.send(user);
     } catch (error) {
         errorHandler(error, req, res);
+        logger.error(error.message)
     }
 })
 
