@@ -63,4 +63,4 @@ app.put("/reimbursements/:id", async (req, res) =>{
     res.send(updatedReimbursement);
 })
 
-app.listen(5000, ()=>console.log("Application Started..."))
+app.listen(process.env.PORT ?? 5000, ()=>console.log("Application Started..."))
