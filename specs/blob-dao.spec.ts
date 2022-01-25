@@ -1,5 +1,5 @@
 import BlobDAO, { BlobDao } from "../daos/blob-dao";
-import {Blob} from 'node:buffer'
+import {Blob} from 'buffer'
 
 const blobDao: BlobDAO = new BlobDao();
 
