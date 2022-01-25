@@ -12,4 +12,5 @@ export default interface Reimbursement{
     reason: string
     isApproved: IsApproved
     mgrComment?: string
+    imageUrl?: string
 }

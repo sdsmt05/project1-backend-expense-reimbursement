@@ -8,9 +8,13 @@ import LoginService, { LoginServiceImpl } from './services/login-service';
 import Employee from './entities/employee';
 import errorHandler from './errors/error-handler';
 import { logger } from './logger/logger';
+import multer from 'multer';
+import BlobDAO, { BlobDao } from './daos/blob-dao';
 
 
 const app = express();
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage});
 app.use(express.json());
 app.use(cors());
 
@@ -18,6 +22,7 @@ const reimbursementDao: ReimbursementDAO = new ReimbursementDaoCosmosDb();
 const userDao: UserDAO = new UserDaoCosmosDb();
 const reimbursementService: ReimbursementService = new ReimbursementServiceImpl(reimbursementDao);
 const loginService: LoginService = new LoginServiceImpl(userDao);
+const blobDao: BlobDAO = new BlobDao();
 
 
 app.get("/reimbursements", async (req, res) =>{
@@ -43,6 +48,15 @@ app.post("/reimbursements", async (req, res) =>{
     const savedReimbursement: Reimbursement = await reimbursementService.createReimbursement(reimbursement);
     res.status(201);
     res.send(savedReimbursement);
+})
+
+app.post("/upload", upload.single('myFile'), async (req, res) =>{
+    const originalName = req.file.originalname;
+    const buffer = req.file.buffer;
+    const size = req.file.size;
+    const uploadedBlobUri = await blobDao.createBlob(originalName, buffer, size);
+    res.status(200);
+    res.send(uploadedBlobUri);
 })
 
 app.patch("/login", async (req, res) =>{
