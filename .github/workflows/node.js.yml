@@ -11,6 +11,7 @@ on:
     
 env:
   AZURE_COSMOS_CONNECTION: ${{secrets.AZURE_COSMOS_CONNECTION}}
+  AZURE_STORAGE: ${{secrets.AZURE_STORAGE}}
 
 jobs:
   build:
